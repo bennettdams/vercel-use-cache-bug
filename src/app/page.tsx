@@ -4,15 +4,32 @@ import { UsersDisplay } from "./users-display";
 export default async function Home({
   searchParams,
 }: {
-  searchParams: Promise<{ users: string | undefined }>;
+  searchParams: Promise<{
+    users: string | undefined;
+    filter: string | undefined;
+  }>;
 }) {
-  const { users } = await searchParams;
+  const { users: usersParam, filter } = await searchParams;
+  const users = usersParam?.split(",") ?? [];
   console.log("users from params: ", users);
-  const usersData = await getUsers(!users ? [] : users.split(","));
+  const usersFiltered = await getUsers(users, filter ?? "");
 
   return (
     <div className="p-32">
-      <UsersDisplay users={usersData} />
+      <p>Users all:</p>
+      <ul>
+        {users.map((user) => (
+          <li key={user}>{user}</li>
+        ))}
+      </ul>
+
+      <p>Filter: {filter}</p>
+
+      <UsersDisplay
+        users={users}
+        usersFiltered={usersFiltered}
+        filter={filter}
+      />
     </div>
   );
 }

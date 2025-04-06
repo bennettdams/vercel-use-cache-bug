@@ -3,15 +3,23 @@
 import { useRouter } from "next/navigation";
 import { addUser } from "./actions";
 
-export function UsersDisplay({ users }: { users: string[] }) {
+export function UsersDisplay({
+  users,
+  usersFiltered,
+  filter,
+}: {
+  users: string[];
+  usersFiltered: string[];
+  filter: string | undefined;
+}) {
   const router = useRouter();
   console.log("UsersDisplay: ", users);
 
   return (
-    <div className="p-32">
-      <p>Users:</p>
+    <div className="p-32 bg-gray-100">
+      <p>Users filtered:</p>
       <ul>
-        {users.map((user) => (
+        {usersFiltered.map((user) => (
           <li key={user}>{user}</li>
         ))}
       </ul>
@@ -22,7 +30,9 @@ export function UsersDisplay({ users }: { users: string[] }) {
           await addUser();
 
           const params = new URLSearchParams();
-          params.append("users", users.join(","));
+          const usersNew = [...users, `User ${users.length + 1}`];
+          params.append("users", usersNew.join(","));
+          params.append("filter", filter === "1" ? "2" : "1");
 
           router.replace(`/?${params.toString()}`);
         }}
