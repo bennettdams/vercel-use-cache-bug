@@ -1,13 +1,9 @@
 import { unstable_cacheTag } from "next/cache";
 
-export async function getUsers(filter: "Alice" | "Bob") {
+export async function getUsers(previousUsers: string[]) {
   "use cache";
   unstable_cacheTag("users");
-  console.log("Called getUsers: ", filter);
+  console.log("Called getUsers with: ", previousUsers);
 
-  if (filter === "Alice") {
-    return ["Alice"];
-  } else {
-    return ["Bob"];
-  }
+  return [...previousUsers, `User ${previousUsers.length + 1}`];
 }

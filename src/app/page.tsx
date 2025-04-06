@@ -4,15 +4,15 @@ import { UsersDisplay } from "./users-display";
 export default async function Home({
   searchParams,
 }: {
-  searchParams: Promise<{ filter: "Alice" | "Bob" }>;
+  searchParams: Promise<{ users: string | undefined }>;
 }) {
-  const { filter } = await searchParams;
-  const users = await getUsers(filter);
+  const { users } = await searchParams;
+  console.log("users from params: ", users);
+  const usersData = await getUsers(!users ? [] : users.split(","));
 
   return (
     <div className="p-32">
-      <p>Filter: {filter}</p>
-      <UsersDisplay users={users} filter={filter} />
+      <UsersDisplay users={usersData} />
     </div>
   );
 }
