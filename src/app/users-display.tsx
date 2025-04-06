@@ -1,6 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { addUser } from "./actions";
 
 export function UsersDisplay({
@@ -13,6 +14,7 @@ export function UsersDisplay({
   filter: string | undefined;
 }) {
   const router = useRouter();
+  const [role, setRole] = useState<"user" | "admin">("user");
   console.log("UsersDisplay: ", users);
 
   return (
@@ -30,11 +32,13 @@ export function UsersDisplay({
           await addUser();
 
           const params = new URLSearchParams();
-          const usersNew = [...users, `User ${users.length + 1}`];
+          const usersNew = [...users, `${role} ${users.length + 1}`];
           params.append("users", usersNew.join(","));
           params.append("filter", filter === "1" ? "2" : "1");
 
           router.replace(`/?${params.toString()}`);
+
+          setRole((prevRole) => (prevRole === "user" ? "admin" : "user"));
         }}
       >
         Switch filter

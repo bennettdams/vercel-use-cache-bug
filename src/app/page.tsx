@@ -6,13 +6,13 @@ export default async function Home({
 }: {
   searchParams: Promise<{
     users: string | undefined;
-    filter: string | undefined;
+    filter: "user" | "admin" | undefined;
   }>;
 }) {
   const { users: usersParam, filter } = await searchParams;
   const users = usersParam?.split(",") ?? [];
   console.log("users from params: ", users);
-  const usersFiltered = await getUsers(users, filter ?? "");
+  const usersFiltered = await getUsers(users, filter ?? "user");
 
   return (
     <div className="p-32">

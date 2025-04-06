@@ -1,6 +1,6 @@
 import { unstable_cacheTag } from "next/cache";
 
-export async function getUsers(users: string[], filter: string) {
+export async function getUsers(users: string[], filter: "user" | "admin") {
   "use cache";
   unstable_cacheTag("users");
   console.log("Called getUsers with: ", users, filter);
