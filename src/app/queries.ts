@@ -1,9 +1,11 @@
-import { cacheTag } from "next/dist/server/use-cache/cache-tag";
+import { unstable_cacheTag } from "next/cache";
 
-export async function getDate() {
+export const users = ["Alice", "Bob"];
+
+export async function getUsers() {
   "use cache";
-  cacheTag("date");
-  console.log("Called getDate");
+  unstable_cacheTag("users");
+  console.log("Called getUsers");
 
-  return new Date().toISOString();
+  return users;
 }

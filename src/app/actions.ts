@@ -1,10 +1,12 @@
 "use server";
 import { revalidateTag } from "next/cache";
+import { users } from "./queries";
 
-export async function revalidateDate() {
+export async function addUser() {
   "use server";
 
-  console.log("Called revalidateDate");
-  revalidateTag("date");
-  console.log("Finished revalidateDate");
+  console.log("Called addUser");
+  users.push("Some name " + Math.random());
+  revalidateTag("users");
+  console.log("Finished addUser");
 }

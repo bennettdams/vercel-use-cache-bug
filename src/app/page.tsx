@@ -1,12 +1,12 @@
-import { DateDisplay } from "./date-display";
-import { getDate } from "./queries";
+import { getUsers } from "./queries";
+import { UsersDisplay } from "./users-display";
 
 export default async function Home() {
-  const date = await getDate();
+  const users = await getUsers();
 
   return (
     <div className="p-32">
-      <DateDisplay date={date} />
+      <UsersDisplay users={users} />
     </div>
   );
 }
