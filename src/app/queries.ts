@@ -1,11 +1,13 @@
 import { unstable_cacheTag } from "next/cache";
 
-export const users = ["Alice", "Bob"];
-
-export async function getUsers() {
+export async function getUsers(filter: "Alice" | "Bob") {
   "use cache";
   unstable_cacheTag("users");
-  console.log("Called getUsers");
+  console.log("Called getUsers: ", filter);
 
-  return users;
+  if (filter === "Alice") {
+    return ["Alice"];
+  } else {
+    return ["Bob"];
+  }
 }
