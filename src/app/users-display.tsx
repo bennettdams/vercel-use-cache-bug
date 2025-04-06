@@ -34,7 +34,7 @@ export function UsersDisplay({
           const params = new URLSearchParams();
           const usersNew = [...users, `${role} ${users.length + 1}`];
           params.append("users", usersNew.join(","));
-          params.append("filter", filter === "1" ? "2" : "1");
+          params.append("filter", role);
 
           router.replace(`/?${params.toString()}`);
 
