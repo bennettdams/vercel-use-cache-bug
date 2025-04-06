@@ -24,7 +24,7 @@ export function UsersDisplay({ users }: { users: string[] }) {
           const params = new URLSearchParams();
           params.append("users", users.join(","));
 
-          router.push(`/?${params.toString()}`);
+          router.replace(`/?${params.toString()}`);
         }}
       >
         Switch filter
