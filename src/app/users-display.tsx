@@ -1,44 +1,33 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 import { addUser } from "./actions";
 
 export function UsersDisplay({
-  users,
-  usersFiltered,
+  userForFilter,
   filter,
 }: {
-  users: string[];
-  usersFiltered: string[];
-  filter: string | undefined;
+  userForFilter: { id: number; name: string };
+  filter: string;
 }) {
   const router = useRouter();
-  const [role, setRole] = useState<"user" | "admin">("user");
-  console.log("UsersDisplay: ", users);
+  console.log("UsersDisplay user: ", userForFilter);
 
   return (
     <div className="p-32 bg-gray-100">
-      <p>Users filtered:</p>
-      <ul>
-        {usersFiltered.map((user) => (
-          <li key={user}>{user}</li>
-        ))}
-      </ul>
+      <p>User for filter:</p>
+      <p>{userForFilter.id}</p>
+      <p>{userForFilter.name}</p>
 
       <button
         className="bg-blue-500 mt-10 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         onClick={async () => {
           await addUser();
 
-          const params = new URLSearchParams();
-          const usersNew = [...users, `${role} ${users.length + 1}`];
-          params.append("users", usersNew.join(","));
-          params.append("filter", role);
+          // const params = new URLSearchParams();
+          // params.append("filter", filter === "1" ? "2" : "1");
 
-          router.replace(`/?${params.toString()}`);
-
-          setRole((prevRole) => (prevRole === "user" ? "admin" : "user"));
+          // router.replace(`/?${params.toString()}`);
         }}
       >
         Switch filter
