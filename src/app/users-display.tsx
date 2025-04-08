@@ -24,10 +24,10 @@ export function UsersDisplay({
         onClick={async () => {
           await addUser();
 
-          // const params = new URLSearchParams();
-          // params.append("filter", filter === "1" ? "2" : "1");
+          const params = new URLSearchParams();
+          params.append("filter", filter === "1" ? "2" : "1");
 
-          // router.replace(`/?${params.toString()}`);
+          router.replace(`/?${params.toString()}`);
         }}
       >
         Switch filter
