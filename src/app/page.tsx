@@ -10,7 +10,7 @@ export default async function Home({
 }) {
   const { filter: filterFromParams } = await searchParams;
   const filter = filterFromParams ?? "1";
-  const userForFilter = await getUsers(filter);
+  const userForFilter = await getUsers();
 
   return (
     <div className="p-32">
