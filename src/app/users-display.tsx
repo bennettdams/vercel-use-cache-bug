@@ -1,37 +1,57 @@
 "use client";
 
+import { User } from "@/data/db-service";
 import { useRouter } from "next/navigation";
-import { addUser } from "./actions";
+import { Fragment } from "react";
+import { addUser, resetUsers } from "../data/actions";
 
 export function UsersDisplay({
-  userForFilter,
+  usersForFilter,
   filter,
 }: {
-  userForFilter: { id: number; name: string };
-  filter: string;
+  usersForFilter: User[];
+  filter: string | null;
 }) {
   const router = useRouter();
-  console.log("UsersDisplay user: ", userForFilter);
+  console.log("UsersDisplay user: ", usersForFilter);
 
   return (
     <div className="p-32 bg-gray-100">
-      <p>User for filter:</p>
-      <p>{userForFilter.id}</p>
-      <p>{userForFilter.name}</p>
-
       <button
-        className="bg-blue-500 mt-10 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
         onClick={async () => {
           await addUser();
 
-          // const params = new URLSearchParams();
-          // params.append("filter", filter === "1" ? "2" : "1");
+          const params = new URLSearchParams();
+          params.append("filter", filter === "user" ? "admin" : "user");
 
-          // router.replace(`/?${params.toString()}`);
+          router.replace(`/?${params.toString()}`);
         }}
       >
-        Switch filter
+        Add user
       </button>
+
+      <button
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+        onClick={async () => {
+          await resetUsers();
+
+          router.replace("/");
+        }}
+      >
+        Reset users
+      </button>
+
+      <p>Users for filter:</p>
+
+      <div className="grid grid-cols-[min-content_1fr] gap-x-2">
+        {usersForFilter.map((user) => (
+          <Fragment key={user.id}>
+            <span>{user.id}</span>
+            <span>{user.name}</span>
+          </Fragment>
+        ))}
+      </div>
     </div>
   );
 }
